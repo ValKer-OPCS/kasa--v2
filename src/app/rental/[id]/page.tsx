@@ -1,11 +1,12 @@
+import { cache } from "react";
 import { notFound } from "next/navigation";
-import rentalsData from "@/data/rentals.json";
+import type { Metadata } from "next";
+
 import Slideshow from "@/components/slideshow/slideshow";
 import Card from "@/components/card/card";
 import Rating from "@/components/rating/rating";
 import Tags from "@/components/tags/tags";
 import Dropdown from "@/components/dropdown/dropdown";
-import { Metadata } from "next";
 
 import styles from "./styles.module.scss";
 import rentalDropdown from "@/components/dropdown/dropdownRental.module.scss";
@@ -15,12 +16,54 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
-const getRental = async (id: string) => {
-  return rentalsData.find((r) => r.id === id) ?? null;
+type Rental = {
+  id: string;
+  title: string;
+  location: string;
+  description: string;
+  pictures: string[];
+  rating: string;
+  tags: string[];
+  equipments: string[];
+  host: {
+    name: string;
+    picture: string;
+  };
 };
 
-export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
+
+
+const getRental = cache(async (id: string): Promise<Rental | null> => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/data/rentals.json`, {
+    cache: "force-cache",
+  });
+
+  if (!response.ok) {
+    return null;
+  }
+
+  const rentals: Rental[] = await response.json();
+
+  return rentals.find((rental) => rental.id === id) ?? null;
+});
+
+const getRentals = cache(async (): Promise<Rental[]> => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/data/rentals.json`, {
+    cache: "force-cache",
+  });
+
+  if (!response.ok) {
+    return [];
+  }
+
+  return response.json();
+});
+
+export async function generateMetadata({
+  params,
+}: Props): Promise<Metadata> {
   const { id } = await params;
+
   const rental = await getRental(id);
 
   if (!rental) {
@@ -33,11 +76,13 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
   return {
     title: `${rental.title} - ${rental.location}`,
     description: rental.description,
+
     openGraph: {
       title: rental.title,
       description: rental.description,
       images: rental.pictures?.[0] ?? "",
     },
+
     twitter: {
       card: "summary_large_image",
       title: rental.title,
@@ -45,23 +90,35 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
       images: [rental.pictures?.[0] ?? ""],
     },
   };
-};
+}
 
-export const generateStaticParams = async () =>
-  rentalsData.map((r) => ({ id: r.id }));
+export async function generateStaticParams() {
+  const rentals = await getRentals();
+
+  return rentals.map((rental) => ({
+    id: rental.id,
+  }));
+}
 
 const RentalPage = async ({ params }: Props) => {
   const { id } = await params;
+
   const rental = await getRental(id);
 
-  if (!rental) return notFound();
+  if (!rental) {
+    notFound();
+  }
 
   const { host } = rental;
 
   return (
     <main>
       <div className={styles.rental_container}>
-        <Slideshow pictures={rental.pictures} title={rental.title} fadeDuration={100} />
+        <Slideshow
+          pictures={rental.pictures}
+          title={rental.title}
+          fadeDuration={100}
+        />
 
         <div className={styles.content}>
           <div className={styles.title_container}>
