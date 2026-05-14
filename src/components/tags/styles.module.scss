@@ -1,0 +1,42 @@
+@use '../../Styles/variables' as var;
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: clamp(6px, 1vw, 10px);
+
+
+
+
+    p {
+        min-width: clamp(70px, 8vw, 115px);
+        height: clamp(20px, 2vw, 25px);
+        border-radius: clamp(6px, 1vw, 10px);
+        background: var.$primary-color;
+        color: var.$primary-text-color;
+        text-align: center;
+        font-family: var.$primary-font;
+        font-size: clamp(10px, 1.1vw, 14px);
+        font-weight: 700;
+        line-height: clamp(20px, 2vw, 25px);
+        padding: 0 clamp(6px, 1vw, 10px);
+    }
+}
+
+@media (max-width: 376px) {
+    .tags {
+        gap: 10px;
+        margin-top: 10px;
+        margin-bottom: 16.5px;
+
+        p {
+            min-width: 84px;
+            height: 18px;
+            font-size: 10px;
+            border-radius: 5px;
+            line-height: 20px;
+            padding: 0 3px;
+        }
+    }
+}

@@ -1,0 +1,55 @@
+ @use '../../Styles/variables' as var;
+
+.footer {
+    display: flex;
+    justify-content: center;
+
+    background-color: var.$tertiary-background-color ;
+    padding: 50px 0;
+    
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        gap: 28.5px;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            height: 40px;
+            width: 122px;
+
+        }
+    }
+
+    p {
+
+        color: var.$primary-text-color;
+        text-align: center;
+        font-family: var.$primary-font;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 142.6%;
+    }
+}
+
+@media (max-width: 376px) {
+    .footer {
+        height: 210px;
+        padding: 0;
+
+        &__container {
+            gap: 20px;
+
+            img {
+                height: 40px;
+                width: 122px;
+            }
+        }
+
+        p {
+            width: 133px;
+            font-size: 12px;
+        }
+    }
+}

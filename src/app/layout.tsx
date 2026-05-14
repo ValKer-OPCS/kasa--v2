@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Montserrat } from 'next/font/google'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['100','200','300','400','500','600','700','800','900'],
+  variable: '--font-montserrat',
+})
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,11 +23,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" className={montserrat.variable}>
+      <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossOrigin="anonymous" referrerPolicy="no-referrer"/>
+      </head>
+      <body>
+        <Header/>
         {children}
+        <Footer/>
       </body>
     </html>
   );

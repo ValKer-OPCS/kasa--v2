@@ -1,0 +1,49 @@
+.banner {
+  margin: 0 clamp(20px, 7vw, 100px) clamp(20px, 3vw, 43px) clamp(20px, 7vw, 100px);
+  position: relative;
+  width: clamp(335px, 86vw, 1240px);
+  height: clamp(111px, 15vw, 223px);
+  border-radius: 25px;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-radius: 25px;
+    background-color: rgba(0, 0, 0, var(--overlay-opacity, 0.0));
+  }
+
+
+   img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+}
+
+
+@media (max-width: 376px) {
+  .banner {
+    margin: 7px 20px 20px 20px;
+    width: 335px;
+    height: 111px;
+    border-radius: 10px;
+
+    &::before {
+    border-radius: 10px;
+  }
+
+    img {
+      border-radius: 10px;
+
+
+    }
+
+  }
+
+}

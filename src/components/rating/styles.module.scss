@@ -1,0 +1,22 @@
+.rating {
+    display: flex;
+    gap: clamp(8px, 1.2vw, 15px);
+    font-size: clamp(14px, 1.6vw, 23px);
+}
+
+.starEmpty {
+    color: #E3E3E3;
+
+}
+
+@media (max-width: 376px) {
+
+    .rating {
+        display: flex;
+        font-size: 13px;
+        gap: 6px;
+
+    }
+
+
+}

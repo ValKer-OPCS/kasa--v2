@@ -1,0 +1,55 @@
+@use '../../Styles/variables' as var;
+
+.card {
+    display: flex;
+    flex-direction: row;
+    height: 64px;
+    width: 167px;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        border-radius: 50%;
+        order: 2;
+        height: 64px;
+        width: 64px;
+
+    }
+
+    figcaption {
+
+        color: var.$primary-color;
+        text-align: right;
+        font-family: var.$primary-font;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 142.6%;
+
+
+    }
+
+}
+
+@media (max-width: 376px) {
+    
+
+    .card {
+        order: 2;
+        width: 100px;
+        height: 32px;
+
+        img {
+            border-radius: 50%;
+            order: 2;
+            height: 32px;
+            width: 32px;
+
+            
+        }
+        figcaption {
+                font-size: 12px;
+
+            }
+    }
+}

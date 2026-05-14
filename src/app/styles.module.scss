@@ -1,0 +1,107 @@
+@use '../Styles/variables.scss' as var;
+
+.text_container {
+  display: flex;
+  position: absolute;
+  top: clamp(30px, 5.5vw, 78px);
+  left: clamp(16px, 19vw, 273px);
+
+  p {
+    color: #FFF;
+    text-shadow: 1px 1px 0 black, -1px 1px 0 black, 1px -1px 0 black, -1px -1px 0 black;
+    font-family: var.$primary-font;
+    font-size: clamp(24px, 3.3vw, 48px);
+    font-weight: 700;
+    line-height: 142.6%;
+  }
+
+}
+@media (max-width: 376px) {
+
+  .text_container {
+    width: 100%;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0;
+    top: 20px;
+    left: 16px;
+
+    p {
+      font-size: 24px;
+      text-shadow: none;
+    }
+  }
+}
+
+.error {
+    text-align: center;
+
+    h1,
+    p {
+        font-family: var.$primary-font;
+        color: var.$primary-color;
+    }
+
+    h1 {
+        font-size: clamp(96px, 20vw, 288px);
+        font-weight: 700;
+    }
+
+    p {
+        font-size: clamp(18px, 2.5vw, 36px); 
+        font-weight: 500;
+        line-height: 142.6%;
+
+    }
+
+    a {
+        font-family: var.$primary-font;
+        text-decoration: underline;
+        color: var.$secondary-text-color;
+    }
+}
+
+.message {
+    text-align: center;
+    margin: 140px 0;
+
+    &__link {
+        margin-bottom: 140px;
+    }
+}
+
+@media (max-width: 376px) {
+
+    .error {
+
+        h1 {
+            font-size: 96px;
+        }
+
+        p {
+            width: 260px;
+            margin-top: 113px;
+            font-size: 18px;
+
+
+        }
+
+        a {
+            font-size: 14px;
+            line-height: 142.6%;
+
+        }
+    }
+
+    .message {
+        text-align: center;
+        margin: 140px 0;
+
+        &__link {
+            margin-bottom: 140px;
+        }
+    }
+
+
+
+}

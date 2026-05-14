@@ -1,0 +1,118 @@
+@use '../../Styles/variables' as var;
+
+.slideshow {
+    position: relative;
+    width: clamp(335px, 86vw, 1240px);
+    height: clamp(225px, 28.8vw, 415px);
+    max-width: 1240px;
+
+    margin: auto;
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 25px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .current {
+        opacity: 1;
+        z-index: 1;
+    }
+
+    .next {
+        opacity: 0;
+        z-index: 2;
+        animation: fadeIn 0.5s forwards;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.arrowLeft,
+.arrowRight {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 10;
+
+    svg,
+    img {
+        width: clamp(24px, 5vw, 80px);
+        height: clamp(24px, 5vw, 80px);
+    }
+}
+
+.arrowLeft {
+    left: clamp(6px, 1.6vw, 23px);
+}
+
+.arrowRight {
+    right: clamp(6px, 1.6vw, 23px);
+}
+
+.counter {
+    position: absolute;
+    bottom: clamp(10px, 1.7vw, 25px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    color: var.$primary-text-color;
+    text-align: center;
+    font-family: var.$primary-font;
+    font-size: clamp(12px, 1.25vw, 18px);
+    font-weight: 500;
+    line-height: 142.6%;
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 376px) {
+    .slideshow {
+        width: 335px;
+        height: 225px;
+    }
+
+    .imageWrapper {
+        height: 100%;
+        width: 100%;
+    }
+
+    .arrowLeft {
+        top: 45%;
+        left: 5.86px;
+    }
+
+    .arrowRight {
+        top: 45%;
+        right: 5.86px;
+    }
+    .svg-icon{
+    svg {
+        height: 24px;
+        width: 24px;
+    }}
+
+    .counter {
+        display: none;
+    }
+}
