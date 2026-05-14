@@ -58,13 +58,11 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
   return {
     title: `${rental.title} - ${rental.location}`,
     description: rental.description,
-
     openGraph: {
       title: rental.title,
       description: rental.description,
       images: rental.pictures?.[0] ?? "",
     },
-
     twitter: {
       card: "summary_large_image",
       title: rental.title,
@@ -76,7 +74,9 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 
 export const generateStaticParams = async () => {
   const rentals = await getRentals();
-  return rentals.map((rental) => ({ id: rental.id }));
+  return rentals.map((rental) => ({
+    id: rental.id,
+  }));
 };
 
 const RentalPage = async ({ params }: Props) => {
@@ -115,7 +115,7 @@ const RentalPage = async ({ params }: Props) => {
 
           <Dropdown title="Équipements" styles={rentalDropdown}>
             <ul>
-              {rental.equipments.map((item, index) => (
+              {rental.equipments.map((item: string, index: number) => (
                 <li className={styles.list} key={index}>
                   {item}
                 </li>
