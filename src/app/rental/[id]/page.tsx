@@ -74,9 +74,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 
 export const generateStaticParams = async () => {
   const rentals = await getRentals();
-  return rentals.map((rental) => ({
-    id: rental.id,
-  }));
+  return rentals.map((rental) => ({ id: rental.id }));
 };
 
 const RentalPage = async ({ params }: Props) => {
@@ -115,7 +113,7 @@ const RentalPage = async ({ params }: Props) => {
 
           <Dropdown title="Équipements" styles={rentalDropdown}>
             <ul>
-              {rental.equipments.map((item: string, index: number) => (
+              {rental.equipments.map((item, index) => (
                 <li className={styles.list} key={index}>
                   {item}
                 </li>
