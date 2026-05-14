@@ -32,10 +32,7 @@ type Rental = {
 };
 
 const getRentals = cache(async (): Promise<Rental[]> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/data/rentals.json`,
-    { cache: "force-cache" }
-  );
+  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/data/rentals.json`, { cache: "force-cache" } );
 
   if (!response.ok) return [];
 
