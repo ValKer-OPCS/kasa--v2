@@ -31,22 +31,6 @@ type Rental = {
   };
 };
 
-
-
-const getRental = cache(async (id: string): Promise<Rental | null> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/data/rentals.json`, {
-    cache: "force-cache",
-  });
-
-  if (!response.ok) {
-    return null;
-  }
-
-  const rentals: Rental[] = await response.json();
-
-  return rentals.find((rental) => rental.id === id) ?? null;
-});
-
 const getRentals = cache(async (): Promise<Rental[]> => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/data/rentals.json`, {
     cache: "force-cache",
@@ -59,12 +43,18 @@ const getRentals = cache(async (): Promise<Rental[]> => {
   return response.json();
 });
 
+const getRentalById = cache(async (id: string): Promise<Rental | null> => {
+  const rentals = await getRentals();
+
+  return rentals.find((rental) => rental.id === id) ?? null;
+});
+
 export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
   const { id } = await params;
 
-  const rental = await getRental(id);
+  const rental = await getRentalById(id);
 
   if (!rental) {
     return {
@@ -103,7 +93,7 @@ export async function generateStaticParams() {
 const RentalPage = async ({ params }: Props) => {
   const { id } = await params;
 
-  const rental = await getRental(id);
+  const rental = await getRentalById(id);
 
   if (!rental) {
     notFound();
