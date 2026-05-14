@@ -32,28 +32,23 @@ type Rental = {
 };
 
 const getRentals = cache(async (): Promise<Rental[]> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/data/rentals.json`, {
-    cache: "force-cache",
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_APP_URL}/data/rentals.json`,
+    { cache: "force-cache" }
+  );
 
-  if (!response.ok) {
-    return [];
-  }
+  if (!response.ok) return [];
 
   return response.json();
 });
 
 const getRentalById = cache(async (id: string): Promise<Rental | null> => {
   const rentals = await getRentals();
-
   return rentals.find((rental) => rental.id === id) ?? null;
 });
 
-export async function generateMetadata({
-  params,
-}: Props): Promise<Metadata> {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { id } = await params;
-
   const rental = await getRentalById(id);
 
   if (!rental) {
@@ -80,35 +75,25 @@ export async function generateMetadata({
       images: [rental.pictures?.[0] ?? ""],
     },
   };
-}
+};
 
-export async function generateStaticParams() {
+export const generateStaticParams = async () => {
   const rentals = await getRentals();
-
-  return rentals.map((rental) => ({
-    id: rental.id,
-  }));
-}
+  return rentals.map((rental) => ({ id: rental.id }));
+};
 
 const RentalPage = async ({ params }: Props) => {
   const { id } = await params;
-
   const rental = await getRentalById(id);
 
-  if (!rental) {
-    notFound();
-  }
+  if (!rental) notFound();
 
   const { host } = rental;
 
   return (
     <main>
       <div className={styles.rental_container}>
-        <Slideshow
-          pictures={rental.pictures}
-          title={rental.title}
-          fadeDuration={100}
-        />
+        <Slideshow pictures={rental.pictures} title={rental.title} fadeDuration={100} />
 
         <div className={styles.content}>
           <div className={styles.title_container}>
